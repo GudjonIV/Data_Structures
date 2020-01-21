@@ -53,4 +53,3 @@ def ackerman(m, n):
 #print (fibonacci(5))
 #print (ackerman(4, 1))
 print(ackerman(2, 1))
-print (2 ** 2 ** 2 ** 2)
