@@ -1,5 +1,5 @@
 # Student: Guðjón Ingi Valdimarsson
-# Date: 28.01.2020
+# Date: 03.02.2020
 
 def modulus(a, b):  # ONLY NEEDS TO WORK FOR POSITIVE INTEGERS
     #TODO: remove 'pass' and implement functionality
@@ -8,9 +8,21 @@ def modulus(a, b):  # ONLY NEEDS TO WORK FOR POSITIVE INTEGERS
     return modulus(a - b, b)
 
 
+def count_instances(lis, value):
+    """ Helper function that recurses and finds how many instances of values are in lis """
+    if lis == []:
+        return 0
+    else:
+        if lis[-1] == value:
+            return count_instances(lis[:-1], value) + 1
+        else:
+            return count_instances(lis[:-1], value)
+
 def how_many(lis1, lis2):
-    #TODO: remove 'pass' and implement functionality
-    pass
+    if lis1 == []:
+        return 0
+    else:
+        return count_instances(lis2, lis1[-1]) + how_many(lis1[:-1], lis2)
 
 
 # FEEL FREE TO EDIT THE TESTS AND MAKE THEM BETTER

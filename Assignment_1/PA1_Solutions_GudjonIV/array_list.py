@@ -39,16 +39,15 @@ class ArrayList:
 
     #Time complexity: O(n) - linear time in size of list
     def prepend(self, value):
-        self.ordered_bool = False
         self.resize()
         for i in range(self.size, 0, -1):
             self.arr[i] = self.arr[i - 1]
         self.arr[0] = value
         self.size += 1
+        self.ordered_bool = False
 
     #Time complexity: O(n) - linear time in size of list
     def insert(self, value, index):
-        self.ordered_bool = False
         if index == self.size:
             self.append(value)
         else:
@@ -58,19 +57,20 @@ class ArrayList:
                 self.arr[i] = self.arr[i - 1]
             self.arr[index] = value
             self.size += 1
+        self.ordered_bool = False    
 
     #Time complexity: O(1) - constant time
     def append(self, value):
-        self.ordered_bool = False
         self.resize()
         self.arr[self.size] = value
         self.size += 1
+        self.ordered_bool = False
 
     #Time complexity: O(1) - constant time
     def set_at(self, value, index):
-        self.ordered_bool = False
         self.__check_index(index)
         self.arr[index] = value
+        self.ordered_bool = False
 
     #Time complexity: O(1) - constant time
     def get_first(self):
@@ -102,6 +102,7 @@ class ArrayList:
         for i in range(index, self.size - 1):
             self.arr[i] = self.arr[i + 1]
         self.size -= 1
+        self.ordered_bool = False
 
 
     #Time complexity: O(1) - constant time
