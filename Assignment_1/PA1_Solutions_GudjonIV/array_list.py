@@ -1,4 +1,4 @@
-# Author: Guðjón Ingi Valdimarsson
+# Student: Guðjón Ingi Valdimarsson
 # Date. 03.02.2020
 
 class IndexOutOfBounds(Exception):
