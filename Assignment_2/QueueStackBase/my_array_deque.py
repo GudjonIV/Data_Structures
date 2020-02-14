@@ -11,14 +11,14 @@ class ArrayDeque():
         ret_str = ""
         walk = self.front
         for _ in range(self.size):
-            ret_str += str(self.arr[walk]) + ", "
+            ret_str += str(self.arr[walk]) + " "
             walk = (1 + walk) % self.capacity
-        return ret_str.strip(", ")
+        return ret_str.strip(" ")
 
-    def __get_back(self):
+    def __get_back(self): # Returns where the next back index should be
         return (self.size + self.front) % self.capacity
 
-    def __resize(self):
+    def __resize(self): # Resizes the array
         if self.size == self.capacity:
             new_arr = [None] * (self.capacity * 2)
             walk = self.front
@@ -69,3 +69,10 @@ if __name__ == "__main__":
     print (deq)
     deq.pop_back()
     print (deq)
+    deq.push_front(7)
+    deq.push_front(10)
+    deq.push_front(3)
+    print (deq)
+    deq.push_back(8)
+    print (deq)
+    print (deq.get_size())
