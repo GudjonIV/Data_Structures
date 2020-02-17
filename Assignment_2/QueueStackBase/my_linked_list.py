@@ -18,9 +18,9 @@ class LinkedList():
         ret_str = ""
         walk = self.head
         while walk != None:
-            ret_str += str(walk.data) + ", "
+            ret_str += str(walk.data) + " "
             walk = walk.next
-        return ret_str.strip(", ")
+        return ret_str.strip(" ")
 
     def push_back(self, data):
         node = self._Node(data)
