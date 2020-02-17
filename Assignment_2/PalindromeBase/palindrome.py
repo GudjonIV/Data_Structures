@@ -12,7 +12,7 @@ def print_to_screen(head):
     else:
         print("")
 
-def _palindrome_rec(left_node, right_node):
+def _palindrome_rec(left_node, right_node): # helper recursive function for palindrome
     if right_node == None:
         return left_node
     left_node = _palindrome_rec(left_node, right_node.next)
@@ -24,7 +24,7 @@ def _palindrome_rec(left_node, right_node):
     return False
 
 def palindrome(head):
-    if _palindrome_rec(head, head) == None:
+    if _palindrome_rec(head, head) == None: #check if none because if it reaches the end it returns node.next which is none
         return True
     return False 
 
