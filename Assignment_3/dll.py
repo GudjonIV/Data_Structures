@@ -81,12 +81,13 @@ class DLL:
                 self.current = self.current.prev
 
     def move_to_pos(self, position):
-        if self.reverse_bool: # Get new position if reverse is true
-            position = self.size - 1 - position
-        walker = self.head.next
-        for _ in range(position):
-            walker = walker.next
-        self.current = walker   
+        if position < self.size:
+            if self.reverse_bool: # Get new position if reverse is true
+                position = self.size - 1 - position
+            walker = self.head.next
+            for _ in range(position):
+                walker = walker.next
+            self.current = walker   
 
     def remove_all(self, value):
         walker = self.head.next
