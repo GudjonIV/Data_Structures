@@ -1,4 +1,5 @@
 # Author: Guðjón Ingi Valdimarsson
+# Date: 24.02.2020
 
 class Node:
     def __init__(self, data=None, next=None, prev=None):
@@ -20,13 +21,14 @@ class DLL:
         self.size = 0
 
     def __insert_between(self, data, before, after):
-        """ Takes in data and before and after """
+        """ Takes in data and before and after nodes and inserts a new node in between"""
         new_node = Node(data, after, before)
         before.next = new_node
         after.prev = new_node
         self.size += 1
 
     def __remove_node(self, node):
+        """ Removes the node from the dll """
         value = node.data
         node.prev.next = node.next
         node.next.prev = node.prev
@@ -34,6 +36,7 @@ class DLL:
         return value
     
     def __get_next(self, node):
+        """ Returns the next node of node """
         if node == None:
             return None
         if self.reverse_bool:
@@ -42,6 +45,7 @@ class DLL:
             return node.next
     
     def __get_prev(self, node):
+        """ Returns the previous node of the node """
         if node == None:
             return None
         if self.reverse_bool:
