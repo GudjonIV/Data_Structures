@@ -84,8 +84,6 @@ class DLL:
 
     def move_to_pos(self, position):
         if position <= self.size and position >= 0:
-            if self.reverse_bool: # Get new position if reverse is true
-                position = self.size - 1 - position
             walker = self.__get_next(self.head)
             for _ in range(position):
                 walker = self.__get_next(walker)
