@@ -31,20 +31,30 @@ class DLL:
         node.next.prev = node.prev
         self.size -= 1
         return value
+    
+    def __get_next(self, node):
+        if node == None:
+            return None
+        if self.reverse_bool:
+            return node.prev
+        else:
+            return node.next
+    
+    def __get_prev(self, node):
+        if node == None:
+            return None
+        if self.reverse_bool:
+            return node.next
+        else:
+            return node.prev
 
     def __str__(self):
         ret_str = ""
-        if not self.reverse_bool:
-            walker = self.head.next
-            while walker.data != None:
-                ret_str += str(walker) + " "
-                walker = walker.next
-        else:
-            walker = self.tail.prev
-            while walker.data != None:
-                ret_str += str(walker) + " "
-                walker = walker.prev
-        return ret_str.strip()
+        walker = self.__get_next(self.head)
+        while walker.data != None:
+            ret_str += str(walker) + " "
+            walker = self.__get_next(walker)
+        return ret_str
     
     def __len__(self):
         return self.size
@@ -59,60 +69,60 @@ class DLL:
     def remove(self):
         if self.current != self.tail:
             self.__remove_node(self.current)
-            self.move_to_next()
+            self.current = self.__get_next(self.current)
         
     def get_value(self):
         return self.current.data
 
     def move_to_next(self):
-        if self.reverse_bool:
-            if self.current != self.head.next:
-                self.current = self.current.prev
-        else:
-            if self.current != self.tail:
-                self.current = self.current.next
+        if self.current != self.tail:
+            self.current = self.__get_next(self.current)
 
     def move_to_prev(self):
-        if self.reverse_bool:
-            if self.current != self.tail:
-                self.current = self.current.next
-        else:
-            if self.current != self.head.next:
-                self.current = self.current.prev
+        if self.current != self.__get_next(self.head):
+            self.current = self.__get_prev(self.current)
 
     def move_to_pos(self, position):
-        if position < self.size:
+        if position <= self.size and position >= 0:
             if self.reverse_bool: # Get new position if reverse is true
                 position = self.size - 1 - position
-            walker = self.head.next
+            walker = self.__get_next(self.head)
             for _ in range(position):
-                walker = walker.next
+                walker = self.__get_next(walker)
             self.current = walker   
 
     def remove_all(self, value):
-        walker = self.head.next
+        current_bool = False
+        walker = self.__get_next(self.head)
         while walker != None:
-            if value == walker.data:
+            if str(value) == str(walker.data):
                 if walker == self.current:
-                    self.move_to_pos(0)
-                walker = walker.next
-                self.__remove_node(walker.prev)
+                    current_bool = True
+                walker = self.__get_next(walker)
+                self.__remove_node(self.__get_prev(walker))
             else:
-                walker = walker.next
+                walker = self.__get_next(walker)
+        if current_bool:
+            self.current = self.__get_next(self.head)
     
     def reverse(self):
-        self.reverse_bool = True
+        self.reverse_bool = not self.reverse_bool
+        temp_head = self.head
+        self.head = self.tail
+        self.tail = temp_head
+        self.current = self.__get_next(self.head)
     
     def sort(self):
-        pivot = self.head.next.next
-        while pivot.next != None:
+        pivot = self.__get_next(self.__get_next(self.head))
+        while self.__get_next(pivot) != None:
             walker = pivot
-            while walker != self.head.next and walker.data < walker.prev.data:
+            while walker != self.__get_next(self.head) and walker.data < self.__get_prev(walker).data:
                 temp = walker.data
-                walker.data = walker.prev.data
-                walker = walker.prev
+                walker.data = self.__get_prev(walker).data
+                walker = self.__get_prev(walker)
                 walker.data = temp
-            pivot = pivot.next
+            pivot = self.__get_next(pivot)
+        self.current = self.__get_next(self.head)
             
 if __name__ == "__main__":
     dll = DLL()
@@ -142,5 +152,23 @@ if __name__ == "__main__":
     dll.insert(10)
     dll.insert(8)
     print (dll)
+    dll.reverse()
+    print (dll)
     dll.sort()
     print (dll)
+    dll.reverse()
+    print (dll)
+    dll.sort()
+    print (dll)
+    dll1 = DLL()
+    dll1.insert("A")
+    dll1.insert("C")
+    dll1.insert("C")
+    dll1.insert("B")
+    dll1.insert("C")
+    dll1.reverse()
+    dll1.move_to_pos(0)
+    dll1.move_to_pos(1)
+    print (dll1)
+    dll1.remove_all("C")
+    print (dll1)
