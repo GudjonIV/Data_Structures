@@ -20,6 +20,7 @@ class DLL:
         self.size = 0
 
     def __insert_between(self, data, before, after):
+        """ Takes in data and before and after """
         new_node = Node(data, after, before)
         before.next = new_node
         after.prev = new_node
