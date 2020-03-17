@@ -74,23 +74,39 @@ class LRCMap:
     def get_data(self, key): # returns data for that key or None if non-existant
         return self._get_recur(key, self.root)
 
+    
+            
 
 class HashMap:
     def __init__(self):
         self.array_length = 16
         # MUST USE ONE OF THE FOLLOWING LINES, BUT NOT BOTH
        # self.hash_table = [ [ ] for _ in range(self.array_length) ]
-       # self.hash_table = [ { } for _ in range(self.array_length) ]
+        self.hash_table = [ { } for _ in range(self.array_length) ]
         self.item_count = 0
 
+    def _hash(self, key):
+        a = 41
+        ret = 0
+        for index, c in enumerate(str(key)):
+            ret += (a**index) * ord(c)
+        return ret % self.array_length
+
     def __setitem__(self, key, data): # overrides/updates if already there
-        pass # REMOVE THIS LINE WHEN YOU START IMPLEMENTING
+        index = self._hash(key)
+        if self.__getitem__(key) == None:
+            self.item_count += 1
+        self.hash_table[index][key] = data
 
     def __getitem__(self, key): # returns data - returns None if nothing there
-        pass # REMOVE THIS LINE WHEN YOU START IMPLEMENTING
+        index = self._hash(key)
+        try:
+            return self.hash_table[index][key]
+        except KeyError:
+            return None
 
     def __len__(self):
-        return 0
+        return self.item_count
 
 
 # NO IMPLEMENTATION OF EXAM SOLUTIONS BELOW THIS LINE
