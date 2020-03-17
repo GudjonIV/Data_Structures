@@ -1,7 +1,6 @@
 # Author: Guðjón Ingi Valdimarsson
 # Date: 17.03.2020
 
-# Implement helper classes here
 class LCRNode():
     def __init__(self, data=None, left=None, center=None, right=None):
         self.data = data
@@ -26,55 +25,42 @@ class LRCMap:
             self._build_tree_rec(root.center, size - 1)
             self._build_tree_rec(root.right, size - 1)
 
-    def _put_recur(self, key, data, root):
-        if key == "":
-            root.data = data
-        else:
-            if key[0] == "l":
-                if root.left == None:
-                    root.left = LCRNode()
-                self._put_recur(key[1:], data, root.left)
-
-            elif key[0] == "c":
-                if root.center == None:
-                    root.center = LCRNode()
-                self._put_recur(key[1:], data, root.center)
-
-            elif key[0] == "r":
-                if root.right == None:
-                    root.right = LCRNode()
-                self._put_recur(key[1:], data, root.right)
-
-            else:
-                print ("Key string is invalid!")
-
     def put_data(self, key, data):
-        self._put_recur(key, data, self.root)
-
-    def  _get_recur(self, key, root):
-        if key == "":
-            return root.data
-        else:
-            if key[0] == "l":
-                if root.left == None:
-                    return None
-                return self._get_recur(key[1:], root.left)
-
-            if key[0] == "c":
-                if root.center == None:
-                    return None
-                return self._get_recur(key[1:], root.center)
-                
-            if key[0] == "r":
-                if root.right == None:
-                    return None
-                return self._get_recur(key[1:], root.right)
-                
+        self._get_node(key, self.root).data = data
 
     def get_data(self, key): # returns data for that key or None if non-existant
-        return self._get_recur(key, self.root)
+        node = self._get_node(key, self.root, True)
+        if node:
+            return node.data
+        return None
 
-    
+    def _get_node(self, key, root, search=False): # Finds and returns the Node that is being looked for, None if search is true and node does not exist
+        if key == "":
+            return root
+        else:
+            if key[0] == "l":
+                if root.left == None and search:
+                    return None
+                elif root.left == None:
+                    root.left = LCRNode()
+                return self._get_node(key[1:], root.left, search)
+
+            elif key[0] == "c":
+                if root.center == None and search:
+                    return None
+                elif root.center == None:
+                    root.center = LCRNode()
+                return self._get_node(key[1:], root.center, search)
+
+            elif key[0] == "r":
+                if root.right == None and search:
+                    return None
+                elif root.right == None:
+                    root.right = LCRNode()
+                return self._get_node(key[1:], root.right, search)
+            
+            else:
+                print ("Invalid search string! {} is not valid".format(key[0]))
             
 
 class HashMap:
