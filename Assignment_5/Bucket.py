@@ -7,45 +7,80 @@ class NotFoundException(Exception):
 
 class Bucket():
     class _Node():
-        def __init__(self, key, data, next=None):
+        def __init__(self, key=None, data=None, next=None):
             self.key = key
             self.data = data
             self.next = next
 
     def __init__(self):
         self.size = 0
-        self.head = None
+        self.head = self._Node()
     
     def insert(self, key, data):
         if self.contains(key):
-            raise ItemExistsException
+            raise ItemExistsException()
+        self.head.next = self._Node(key, data, self.head.next)
+        self.size += 1
     
     def update(self, key, data):
-        if not self.contains(key):
-            raise ItemExistsException
+        node = self._find(key)
+        node.data = data
 
-    def find(self, key, nodeBool=False):
-        walker = self.head
+    def _find(self, key, removeBool=False):
+        walker = self.head.next
+        prevNode = self.head    # Used for remove function to have a reference to the previous node
         while walker != None:
             if walker.key == key:
-                if nodeBool:    # If true returns the whole node
-                    return walker
-                else:           # Else returns the node data
-                    return walker.data
+                if removeBool:
+                    return (walker, prevNode)
+                return walker
             walker = walker.next
-        raise NotFoundException
+            prevNode = prevNode.next
+        raise NotFoundException()
+
+    def find(self, key):
+        return self._find(key).data
 
     def contains(self, key):
-        pass
+        try:
+            self._find(key)
+            return True
+        except NotFoundException:
+            return False
 
     def remove(self, key):
-        pass
+        node, prevNode = self._find(key, True)
+        prevNode.next = node.next
+        self.size -= 1
 
     def __setitem__(self, key, data):
-        pass
+        try:
+            self.update(key, data)
+        except NotFoundException:
+            self.insert(key, data)
 
     def __getitem__(self, key):
-        pass
+        return self.find(key)
 
     def __len__(self):
         return self.size
+    
+    def __str__(self):
+        ret_str = ""
+        walker = self.head.next
+        while walker != None:
+            ret_str += "({}: {}), ".format(walker.key, walker.data)
+            walker = walker.next
+        return ret_str.strip(", ")
+
+if __name__ == "__main__":
+    buc = Bucket()
+    for x in range(10):
+        buc.insert(x, "value")
+    print (buc)
+    print (len(buc))
+    buc.update(5, "not value")
+    print (buc)
+    buc[5] = "Val"
+    buc[10] = "value"
+    print (buc)
