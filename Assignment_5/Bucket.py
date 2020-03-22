@@ -1,3 +1,5 @@
+# Author: Guðjón Ingi Valdimarsson
+# Date: 20.03.2020
 
 class ItemExistsException(Exception):
     pass
@@ -64,13 +66,19 @@ class Bucket():
 
     def __len__(self):
         return self.size
-    
-    def __str__(self):
-        ret_str = ""
+
+
+# ---------- Not crucial to assignment ----------
+    def __iter__(self):
         walker = self.head.next
         while walker != None:
-            ret_str += "({}: {}), ".format(walker.key, walker.data)
+            yield (walker.key, walker.data)
             walker = walker.next
+
+    def __str__(self):
+        ret_str = ""
+        for item in self:
+            ret_str += "({}: {}), ".format(item[0], item[1])
         return ret_str.strip(", ")
 
 if __name__ == "__main__":
@@ -84,3 +92,9 @@ if __name__ == "__main__":
     buc[5] = "Val"
     buc[10] = "value"
     print (buc)
+    buc.remove(10)
+    print (buc)
+    print (buc.find(4))
+    print (buc[4])
+    for item in buc:
+        print (item)

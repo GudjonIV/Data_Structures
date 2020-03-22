@@ -1,4 +1,4 @@
-from whatever_your_implementation_file_is_called import *
+from MyHashableKey import *
 
 # READ THIS!!
 # DO NOT USE THE BUILT-IN HASH
