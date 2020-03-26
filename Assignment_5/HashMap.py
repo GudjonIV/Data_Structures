@@ -64,8 +64,6 @@ class HashMap():
     def __len__(self):
         return self.size
 
-
-# ---------- Not crucial to assignment ----------
     def __iter__(self):
         for bucket in self.arr:
             for item in bucket:

@@ -10,12 +10,11 @@ class MyHashableKey():
         return (self.integer, self.string) == (other.integer, other.string) and isinstance(other, MyHashableKey)
     
     def __hash__(self):
-        a = 41
-        ret = self.integer
-        #string = string[5:] + string[:5]
-        for index, c in enumerate(self.string):
-            ret += (a**index) * ord(c)
-        return ret
+        a = 37
+        ret = -self.integer
+        for c in self.string:
+            ret += a * ord(c)
+        return abs(ret - 1)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,27 @@
+def __hash__(self):
+    a = 41
+    ret = self.integer
+    string = self.string[5:] + self.string[:5]
+    for c in self.string:
+        ret += a * ord(c)
+    return ret
+
+Concrete ratio: 0.03813751245583839
+
+Random average ratio 0.03985431935871599
+Total time taken: 30.025559902191162
+Time ratio: 2.729596354744651
+
+
+def __hash__(self):
+    a = 41
+    ret = self.integer
+    for c in self.string:
+        ret += a * ord(c)
+    return ret
+
+Concrete ratio: 0.03813751245583839
+
+Random average ratio 0.03834408485571276
+Total time taken: 28.42694091796875
+Time ratio: 2.584267356178977

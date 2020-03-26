@@ -67,8 +67,6 @@ class Bucket():
     def __len__(self):
         return self.size
 
-
-# ---------- Not crucial to assignment ----------
     def __iter__(self):
         walker = self.head.next
         while walker != None:
