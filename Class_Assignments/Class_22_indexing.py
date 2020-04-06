@@ -46,6 +46,7 @@ class ContactList():
         del self.phoneContainer[contact.phoneStr]
         del self.emailContainer[contact.emailStr]
         del self.container[cid]
+        self.counter -= 1
 
     def get_contacts_ordered_by_name(self):
         ordList = []
